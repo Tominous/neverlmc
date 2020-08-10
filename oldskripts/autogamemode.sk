@@ -1,0 +1,7 @@
+on join:
+	if player has permission "neverlandmc.vanish":
+		set gamemode of player to Creative
+		stop
+	if player doesn't have permission "neverlandmc.vanish":
+		set gamemode of player to Survival
+		stop

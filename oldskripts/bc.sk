@@ -1,0 +1,11 @@
+command /broadcast [<text>]:
+	aliases: /bc, /bcast
+	permission: neverlandmc.bc
+	permission message: &cYou cannot do this!
+	trigger:
+		if arg-1 isn't set:
+			message "&6You have not specified what to broadcast!"
+			stop
+		if arg-1 is set:
+			broadcast "&e[&6Broadcast&e] &6%arg-1%"
+			stop

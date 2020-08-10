@@ -1,0 +1,106 @@
+command /punish [<offline player>]:
+	aliases: /p
+	permission: neverlandmc.punish
+	permission message: &cYou cannot do this!
+	trigger:
+		if arg-1 isn't set:
+			message "&6Specify the player to punish!"
+		if arg-1 is set:
+			if arg-1 is "NeverLandYT":
+				message "&6You cannot punish the owner!"
+				stop
+			wait 2 ticks
+			open chest with 1 row named "&6Punish &e%arg-1%" to player
+			wait 1 ticks
+			if player has permission "neverlandmc.unban":
+				format slot 1 of player with book named "&6Unban &e%arg-1%" to close then run [make player execute command "unban %arg-1%"]
+			if player has permission "neverlandmc.unmute":
+				format slot 7 of player with book named "&6Unmute &e%arg-1%" to close then run [make player execute command "unmute %arg-1%"]
+			format slot 4 of player with iron axe named "&6New Punishment" to close then run [make player execute command "newpunishment %arg-1%"]
+command /newpunishment [<offline player>]:
+	permission: neverlandmc.punish
+	permission message: &cYou cannot do this!
+	trigger:
+		if arg-1 isn't set:
+			message "&6Specify who to add a new punishment to!"
+		if arg-1 is set:
+			if arg-1 is "NeverLandYT":
+				message "&6You cannot punish the owner!"
+				stop
+			wait 2 ticks
+			open chest with 5 rows named "&6Add a new punishment to &e%arg-1%" to player
+			wait 1 tick
+			format slot 0 of player with iron axe named "&6Cheating" with lore "&6This is a permanent ban!" to close then run [make player execute command "ban %arg-1% Cheating"]
+			format slot 1 of player with iron axe named "&6Teaming" with lore "&6This is a permanent ban!" to close then run [make player execute command "ban %arg-1% Teaming"]
+			format slot 2 of player with iron axe named "&6Innapropriate Name/Skin" with lore "&6This is a permanent ban, but appealable after changing their name/skin" to close then run [make player execute command "ban %arg-1% Innapropriate name/skin. Please appeal after you've changed your name/skin, on the discord. https://discord.gg/ZsyWgD6"]
+			format slot 3 of player with iron axe named "&6Bedrock Player" with lore "&6This is a permanent ban!" to close then run [make player execute command "ban %arg-1% Bedrock Player. Please play on Java!"]
+			format slot 4 of player with wooden axe named "&6Spamming" with lore "&6This is a permanent mute." to close then run [make player execute command "mute %player% Spamming"]
+			format slot 5 of player with wooden axe named "&6Racism" with lore "&6This is a permanent mute." to close then run [make player execute command "mute %arg-1% Racism"]
+			format slot 6 of player with wooden axe named "&6Asking/Begging for things" with lore "&6This is a permanent mute. How tho, in case they are spamming you, /ignore them, and ask a mod, admin or owner to ban them." to close then run [make player execute command "mute %arg-1% Asking/Begging for things"]
+			format slot 7 of player with wooden axe named "&6Disrespecting Players" with lore "&6This is a permanent mute." to close then run [make player execute command "mute %arg-1% Disrespecting Players"]
+			format slot 40 of player with barrier named "&cGo Back" to close then run [make player execute command "punish %arg-1%"]
+command /mute [<offline player>] [<text>]:
+	permission: neverlandmc.mute
+	permission message: &cYou cannot do this!
+	trigger:
+		if arg-1 isn't set:
+			message "&6Specify who to mute!"
+		if arg-1 is set:
+			if arg-1 is "NeverLandYT":
+				message "&6You cannot mute the owner!"
+				stop
+			if arg-2 isn't set:
+				set {%arg-1's uuid%.ismuted} to true
+				broadcast "&6%arg-1% &ehas been muted by &6%executor%&e."
+				broadcast "&6Reason: &eViolating Rules"
+			if arg-2 is set:
+				set {%arg-1's uuid%.ismuted} to true
+				broadcast "&6%arg-1% &ehas been muted by &6%executor%&e."
+				broadcast "&6Reason: &e%arg-2%"
+command /unmute [<offline player>]:
+	permission: neverlandmc.unmute
+	permission message: &cYou do not have permission to execute this command!
+	trigger:
+		if arg-1 is "NeverLandYT":
+			message "&6You cannot unban the owner, since he cannot be muted!"
+			stop
+		if arg-1 isn't set:
+			message "&6Specify who to unmute!"
+		if arg-1 is set:
+			broadcast "&6%arg-1% &ehas been unmuted by &6%executor%&e."
+			set {%arg-1's uuid%.ismuted} to false
+command /unban [<offline player>]:
+	permission: neverlandmc.unban
+	permission message: &cYou do not have permission to execute this command!
+	trigger:
+		if arg-1 is "NeverLandYT":
+			message "&6You cannot unban the owner, since he cannot banned!"
+			stop
+		if arg-1 isn't set:
+			message "&6Specify who to unban!"
+		if arg-1 is set:
+			set {%arg-1's uuid%.isbanned} to false
+			broadcast "&6%arg-1% &ehas been unbanned by &6%executor%&e."
+command /ban [<offline player>] [<text>]:
+	permission: neverlandmc.ban
+	permission message: &cYou do not have permission to execute this command!
+	trigger:
+		if arg-1 isn't set:
+			message "&6Specify who to ban!"
+		if arg-1 is set:
+			if arg-1 is "NeverLandYT":
+				message "&6You cannot ban the owner!"
+				stop
+			if arg-2 isn't set:
+				set {%arg-1's uuid%.isbanned} to true
+				set {%arg-1's uuid%.userwhobanned} to "%executor%"
+				set {%arg-1's uuid%.banreason} to "Violating Rules"
+				kick arg-1 due to "%newline%%newline%&6NeverLandMC - &eYou are banned!%newline%&eReason: %{%arg-1's uuid%.banreason}% %newline%&6Banned by: &e%{%arg-1's uuid%.userwhobanned}%"
+				broadcast "&6%arg-1% &ehas been banned by &6%executor%&e."
+				broadcast "&6Reason: &eViolating Rules"
+			if arg-2 is set:
+				set {%arg-1's uuid%.isbanned} to true
+				set {%arg-1's uuid%.userwhobanned} to "%executor%"
+				set {%arg-1's uuid%.banreason} to "%arg-2%"
+				kick arg-1 due to "%newline%%newline%&6NeverLandMC - &eYou are banned!%newline%&eReason: %{%arg-1's uuid%.banreason}% %newline%&6Banned by: &e%{%arg-1's uuid%.userwhobanned}%"
+				broadcast "&6%arg-1% &ehas been banned by &6%executor%&e.%newline%&6Reason: &e%arg-2%"
