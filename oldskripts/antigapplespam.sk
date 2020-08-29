@@ -1,8 +1,0 @@
-on eating golden apple:
-	set {_lasteaten} to difference between {lastategoldenapple.%player's uuid%} and now
-	if {_lasteaten} is less than 10 seconds:
-		cancel event
-		message "&6Please wait &e%difference between 10 seconds and {_lasteaten}%&6 until you can eat a golden apple again."
-		stop
-	set {lastategoldenapple.%player's uuid%} to now
-	message "&6You've eaten a golden apple. Please wait &e10 seconds&6 until you can eat one again."

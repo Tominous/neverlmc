@@ -1,6 +1,0 @@
-on block break:
-	if player doesn't have permission "neverlandmc.build":
-		cancel event
-on block place:
-	if player doesn't have permission "neverlandmc.build":
-		cancel event

@@ -1,3 +1,0 @@
-every 1 second:
-	loop all players:
-		set the loop-player's food level to 10

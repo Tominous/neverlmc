@@ -1,9 +1,0 @@
-command /tebexpurchase [<player>] [<text>]:
-	executable by: console
-	permission: neverlandmc.tebexpurchase
-	permission message: &cYou cannot do this!
-	trigger:
-		if arg-2 is "VIP":
-			make console execute command "lp user %arg-1% parent add vip"
-			broadcast "&6%arg-1% &ehas bought &aVIP &6rank!"
-			broadcast "&6You can buy it yourself in &estore.neverlandyt.tk"

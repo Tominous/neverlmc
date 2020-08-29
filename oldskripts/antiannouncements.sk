@@ -1,2 +1,0 @@
-on script enable:
-	make console execute command "gamerule announceAdvancements false"
