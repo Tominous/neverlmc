@@ -1,0 +1,10 @@
+every 2 minutes:
+	broadcast "&6TIP: &eTo report a hacker, use &6/report HackerName HackTheyAreUsing!"
+every 5 minutes:
+	broadcast "&6TIP: &eBe sure to join our discord! &6https://discord.gg/ZsyWgD6"
+every 3 minutes:
+	broadcast "&6TIP: &eTo get a kit, use &6/kit&e!"
+every 6 minutes:
+	broadcast "&6TIP: &eIf you are in 1.8+, press &6F3 + A &eif player's are invisible to you."
+every 1 minute:
+	broadcast "&6TIP: &eBe sure to read the rules! &6/rules&e!"

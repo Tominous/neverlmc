@@ -1,0 +1,99 @@
+command /gamemode [<text>] [<player>]:
+	aliases: /gm
+	permission: neverlandmc.gamemode
+	permission message: &cYou cannot do this!
+	trigger:
+		if arg-1 isn't set:
+			message "&6Please choose a gamemode! Creative, Survival, Spectator"
+		if arg-1 is set:
+			if arg-2 isn't set:
+				if executor is console:
+					message "&6You cannot do this!" to executor
+				if executor is not console:
+					if arg-1 is "creative", "1" or "c":
+						if player doesn't have permission "neverlandmc.gamemode.creative":
+							message "&cYou are not allowed to go to gamemode creative!"
+							stop
+						if player has permission "neverlandmc.gamemode.creative":
+							set player's gamemode to Creative
+							message "&6Set own gamemode to &eCreative"
+							loop all players:
+								if loop-player has permission "neverlandmc.logs":
+									message "&7[%player%: &6Set own gamemode to &eCreative&6 mode.&7]" to loop-player
+									stop
+					if arg-1 is "survival", "0" or "s":
+						if player doesn't have permission "neverlandmc.gamemode.survival":
+							message "&cYou are not allowed to go to gamemode survival!"
+						if player has permission "neverlandmc.gamemode.survival":
+							set player's gamemode to Survival
+							message "&6Set own gamemode to &eSurvival"
+							loop all players:
+								if loop-player has permission "neverlandmc.logs":
+									message "&7[%player%: &6Set own gamemode to &eSurvival&6 mode.&7]" to loop-player
+									stop
+					if arg-1 is "spectator", "3" or "spec":
+						if player doesn't have permission "neverlandmc.gamemode.spectator":
+							message "&cYou are not allowed to go to gamemode spectator!"
+						if player has permission "neverlandmc.gamemode.spectator":
+							set player's gamemode to Spectator
+							message "&6Set own gamemode to &eSpectator"
+							loop all players:
+								if loop-player has permission "neverlandmc.logs":
+									message "&7[%player%: &6Set own gamemode to &eSpectator&6 mode.&7]" to loop-player
+									stop
+			if arg-2 is set:
+				if arg-1 is "creative", "1" or "c":
+					if player doesn't have permission "neverlandmc.gamemode.creative.others":
+						message "&cYou are not allowed to give gamemode creative to others!"
+						stop
+					if player has permission "neverlandmc.gamemode.creative.others":
+						set arg-2's gamemode to Creative
+						message "&6Set &e%arg-2%&6's &6gamemode to &eCreative"
+						loop all players:
+							if loop-player has permission "neverlandmc.logs":
+								message "&7[%executor%: &6Set &e%arg-2%&6's &6gamemode to &eCreative&6 mode.&7]" to loop-player
+								stop
+				if arg-1 is "survival", "0" or "s":
+					if player doesn't have permission "neverlandmc.gamemode.survival.others":
+						message "&cYou are not allowed to give gamemode survival to others!"
+					if player has permission "neverlandmc.gamemode.survival.others":
+						set arg-2's gamemode to Survival
+						message "&6Set &e%arg-2%&6's &6gamemode to &eSurvival"
+						loop all players:
+							if loop-player has permission "neverlandmc.logs":
+								message "&7[%executor%: &6Set &e%arg-2%&6's &6gamemode to &eSurvival&6 mode.&7]" to loop-player
+								stop
+				if arg-1 is "spectator", "3" or "spec":
+					if player doesn't have permission "neverlandmc.gamemode.spectator.others":
+						message "&cYou are not allowed to give gamemode spectator to others!"
+					if player has permission "neverlandmc.gamemode.spectator":
+						set arg-2's gamemode to Spectator
+						message "&6Set &e%arg-2%&6's &6gamemode to &eSpectator"
+						loop all players:
+							if loop-player has permission "neverlandmc.logs":
+								message "&7[%executor%: &6Set &e%arg-2%&6's &6gamemode to &eSpectator&6 mode.&7]" to loop-player
+								stop
+command /creative [<player>]:
+	aliases: /gmc
+	trigger:
+		if arg-1 isn't set:
+			make player execute command "gamemode creative"
+			stop
+		if arg-1 is set:
+			make player execute command "gamemode creative %arg-1%"
+command /survival [<player>]:
+	aliases: /gms
+	trigger:
+		if arg-1 isn't set:
+			make player execute command "gamemode survival"
+			stop
+		if arg-1 is set:
+			make player execute command "gamemode survival %arg-1%"
+command /spectator [<player>]:
+	aliases: /gmsp, /gmspec, /spec, /spectatormode
+	trigger:
+		if arg-1 isn't set:
+			make player execute command "gamemode spectator"
+			stop
+		if arg-1 is set:
+			make player execute command "gamemode spectator %arg-1%"

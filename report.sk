@@ -1,0 +1,30 @@
+command /report [<player>] [<text>]:
+	trigger:
+		if arg-1 isn't set:
+			message "&6Please specify the player to report."
+			stop
+		if arg-1 is set:
+			if arg-2 isn't set:
+				message "&6Please specify the hacks that the player is using, or the user isn't online!"
+				stop
+			if arg-2 is set:
+				if arg-1 has permission "neverlandmc.reports":
+					message "&6You cannot report staff members!"
+					stop
+				loop all players:
+					if loop-player has permission "neverlandmc.reports":
+						send formatted "<tooltip:&6Click here to teleport to &e%arg-1%><cmd:/tp %arg-1%>&6Reports &e» &6%arg-1's prefix%%arg-1% &ehas been reported by &6%player's prefix%%player%&e. Reason: &6%arg-2%" to loop-player
+				message "&6Sucessfully reported &e%arg-1% &6for &e%arg-2%&6. Note that false reports may get you punished."
+				set {reports.%arg-1's uuid%} to {reports.%arg-1's uuid%} + 1
+				set {lastreport.%arg-1's uuid%} to "%arg-2%"
+command /reports [<players>]:
+	permission: neverlandmc.reports
+	permission message: &cYou cannot execute this command!
+	trigger:
+		if arg-1 isn't set:
+			message "&6You have not specified the player to check the reports."
+			stop
+		if arg-1 is set:
+			message "&6Reports » &e%arg-1%"
+			message "&6Amount » &e%{reports.%arg-1's uuid%}%"
+			message "&6Lastest Report » &e%{lastreport.%arg-1's uuid%}%"

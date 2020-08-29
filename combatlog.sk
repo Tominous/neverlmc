@@ -1,0 +1,65 @@
+on damage:
+    if attacker is player:
+        if attacker is not victim:
+            if {clog::*} doesn't contain "%attacker%":
+                if {vanish.%attacker%} is true:
+                    stop
+                else:
+                    add "%attacker%" to {clog::*}
+                    send "&6&lCOMBATLOG &8| &7You are now in combat with &e%victim%" to attacker
+                    set {donotannoyclog.%attacker%} to false
+            if {clog::*} doesn't contain "%victim%":
+                if {vanish.%victim%} is true:
+                    stop
+                else:
+                    add "%victim%" to {clog::*}
+                    message "&6&lCOMBATLOG &8| &7You are now in combat with &e%attacker%" to victim
+                    set {donotannoyclog.%victim%} to false
+            set {%attacker%.combatlog.time} to now
+            set {%victim%.combatlog.time} to now
+
+every 1 second:
+    loop {clog::*}:
+        set {_combatlog.time} to difference between {%loop-value%.combatlog.time} and now
+        if {_combatlog.time} > 15 seconds:
+            remove loop-value from {clog::*}
+            
+on command:
+    if {clog::*} contains "%player%":
+        if {combatlag.blocked-cmds::*} contains command:
+            cancel event
+            send "&6&lCOMBATLOG &8| &7You can't use that command while in combat." to player
+
+command /combatcommands [<text>] [<text>]:
+	permission: *
+	trigger:
+		arg-1 is set:
+			arg-1 is "list":
+				send "&eCurrent blocked commands: &e%{combatlag.blocked-cmds::*}%"
+			arg-1 is "add":
+				arg-2 is set:
+					add "%arg-2%" to {combatlag.blocked-cmds::*}
+					send "&e%arg-2%&7 has been added to the blocked-list."
+				else:
+					send "&e/combatcommands (list|add|remove) [command]"
+			arg-1 is "remove" or "delete":
+				if {combatlag.blocked-cmds::*} contains "%arg-2%":
+					send "&e%arg-2%&7 has been removed from the blocked-list."
+				else:
+					send "&eThat command is not currently blocked"
+					wait 1 tick
+					send "&eTo see a list of commands, please use /ccmds list"
+		else:
+			send "&e/combatcommands (list|add|remove) [command]"
+
+on death:
+    if {clog::*} contains player:
+        remove player from {combatlog::*}
+        remove player from {clog::*}
+
+on quit:
+    if {clog::*} contains player:
+        remove player from {clog::*}
+        loop player's inventory:
+            drop loop-value
+        clear player's inventory

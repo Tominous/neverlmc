@@ -1,0 +1,9 @@
+on script enable:
+	make console execute command "gamerule showDeathMessages false"
+	stop
+on death:
+	attacker is a player
+	victim is a player
+	set {killsevent.%damager's uuid%} to {killsevent.%damager's uuid%} + 1
+	send "&6You've killed &e%victim%&6! You now have &e%{killsevent.%damager's uuid%}% &6kills!" to damager
+	broadcast "&6%attacker's prefix%%attacker's displayname%%attacker's suffix% &ehas killed &6%victim's prefix%%victim's displayname%%victim's suffix%. &6%damager's prefix%%damager's displayname% &enow has &6%{killsevent.%damager's uuid%}% kills!"

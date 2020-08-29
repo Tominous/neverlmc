@@ -1,0 +1,24 @@
+command /setspawn:
+	permission: neverlandmc.setspawn
+	permission message: &cYou do not have permission to execute this command!
+	trigger:
+		set {spawn.join} to player's location
+		message "&6You have set the spawn!"
+on respawn:
+	teleport player to {spawn.join}
+on join:
+	teleport player to {spawn.join}
+command /spawn [<player>]:
+	trigger:
+		if arg-1 is set:
+			if player has permission "neverlandmc.spawnothers":
+				teleport arg-1 to {spawn.join}
+				message "&6You teleported &e%arg-1% &6to spawn!" to player
+				message "&6You have been teleported to spawn by &e%player%!" to arg-1
+				stop
+			else:
+				message "&cYou cannot do this!"
+		if arg-1 isn't set:
+			teleport player to {spawn.join}
+			message "&6Teleporting you to spawn!" to player
+			stop

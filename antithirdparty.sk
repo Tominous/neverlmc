@@ -1,0 +1,20 @@
+on join:
+    if {combat::%player's uuid%} is not set:
+        set {combat::%player's uuid%} to false
+        
+        
+on damage:
+    if {combat::%victim's uuid%} is false:
+        set {combat::%attacker's uuid%} to true
+        set {combat::%victim's uuid%} to true
+        wait 3 seconds
+        set {combat::%attacker's uuid%} to false
+        set {combat::%victim's uuid%} to false
+    else if {combat::%victim's uuid%} is true:
+        cancel event
+        send "&cThat player is already in a fight!" to attacker
+
+on script enable:
+    loop all players:
+        if {combat::%loop-player's uuid%} is not set:
+            set {combat::%loop-player's uuid%} to false

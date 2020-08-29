@@ -1,0 +1,56 @@
+command /kit [<text>]:
+	trigger:
+		if arg-1 isn't set:
+			open chest with 4 rows named "&6Kits" to player
+			wait 1 tick
+			format slot 11 of player with diamond sword named "&6Kit PvP" to be unstealable
+			format slot 20 of player with lime dye named "&6Click here to equip Kit &ePvP&6." to close then run [make player execute command "kit PvP"]
+			format slot 13 of player with bow named "&6Kit Archer" to be unstealable
+			format slot 22 of player with lime dye named "&6Click here to equip Kit &eArcher&6." to close then run [make player execute command "kit Archer"]
+			format slot 15 of player with diamond named "&6Kit &aVIP" to be unstealable
+			if player doesn't have permission "kits.vip":
+				format slot 24 of player with gray dye named "&6Please purchase VIP on the shop to obtain access to this kit." to be unstealable
+			if player has permission "kits.vip":
+				format slot 24 of player with lime dye named "&6Click here to equip Kit &aVIP&6." to close then run [make player execute command "kit VIP"]
+		if arg-1 is set:
+			if arg-1 is "pvp":
+				message "&6You have sucessfully equiped the &ePvP &6kit."
+				clear player's inventory
+				set slot 0 of player's inventory to diamond sword of sharpness 1 and unbreaking 3
+				set slot 1 of player's inventory to bow of unbreaking 3 and infinity
+				set slot 2 of player's inventory to 10 golden apple
+				set slot 3 of player's inventory to arrow
+				set slot 39 of player's inventory to iron helmet of protection 1 and unbreaking 3
+				set slot 38 of player's inventory to iron chestplate of protection 1 and unbreaking 3
+				set slot 37 of player's inventory to iron leggings of protection 1 and unbreaking 3
+				set slot 36 of player's inventory to iron boots of protection 1 and unbreaking 3
+				stop
+			if arg-1 is "archer":
+				message "&6You have sucessfully equiped the &eArcher &6kit."
+				clear player's inventory
+				set slot 0 of player's inventory to iron sword of sharpness 2 and unbreaking 3
+				set slot 1 of player's inventory to bow of power 1, punch 1, unbreaking 3 and infinity
+				set slot 2 of player's inventory to 20 golden apple
+				set slot 3 of player's inventory to arrow
+				set slot 39 of player's inventory to leather cap of protection 1 and unbreaking 3
+				set slot 38 of player's inventory to leather tunic of protection 1 and unbreaking 3
+				set slot 37 of player's inventory to leather pants of protection 1 and unbreaking 3
+				set slot 36 of player's inventory to leather boots of protection 1 and unbreaking 3
+			if arg-1 is "VIP":
+				if player doesn't have permission "kits.vip":
+					message "&6Please purchase VIP on our store. coming.soon"
+					stop
+				else:
+					message "&6You have sucessfully equiped the &aVIP &6kit."
+					clear player's inventory
+					set slot 0 of player's inventory to diamond sword of sharpness 3 and unbreaking 3
+					set slot 1 of player's inventory to bow of power 2, punch 1, unbreaking 3 and infinity
+					set slot 2 of player's inventory to 30 golden apple
+					set slot 3 of player's inventory to arrow
+					set slot 39 of player's inventory to iron helmet of protection 4 and unbreaking 3
+					set slot 38 of player's inventory to iron chestplate of protection 4 and unbreaking 3
+					set slot 37 of player's inventory to iron leggings of protection 4 and unbreaking 3
+					set slot 36 of player's inventory to iron boots of protection 4 and unbreaking 3
+			else:
+				message "&6This kit doesn't exist!"
+				stop
